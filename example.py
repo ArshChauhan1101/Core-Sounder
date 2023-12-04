@@ -1,3 +1,3 @@
 from main import slowedreverb
 
-slowedreverb('saware.wav', 'lofi saware.wav')
+slowedreverb('bobby.wav', 'lofi bobby.wav')
