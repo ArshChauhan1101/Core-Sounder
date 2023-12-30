@@ -18,7 +18,7 @@ This is a try to automaically convert songs to lofi version of that song
 The following libraries are tools are required for this project to run:
 
 Make sure ffmpeg is installed on device:
-####Linux : 
+#### Linux : 
 `
 sudo apt install ffmpeg
 `
