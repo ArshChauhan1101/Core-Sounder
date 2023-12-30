@@ -1,9 +1,42 @@
-# Code Sounder - Slower and Reverb adder to thee music
-Using this application you can add slowed and reverb effect to any music 
 
-## Steps to Follow
-1. Make sure the audio file is in .wav format if not applciation will convert it to the .wav file
-2. Do not upload music bigger than 10 mins because it is just testing phase and development phase of the project things like that can take some time to improved 
-3. Make sure to upload only audio files not mp4 or videos files 
+  <h1 align="center">Core Sounder </h1>
 
-Enjoy songs editing :)
+<!-- ABOUT THE PROJECT -->
+## About The Project
+
+This is a try to automaically convert songs to lofi version of that song
+
+
+### Languages Used
+
+1. Python
+
+## Getting Started
+
+### Installation
+
+The following libraries are tools are required for this project to run:
+
+Make sure ffmpeg is installed on device:
+####Linux : 
+`
+sudo apt install ffmpeg
+`
+
+#### Windows : 
+
+ffmpeg : https://ffmpeg.org/download.html
+
+#### Python libraries (Required)
+1. pedalboard
+2. Soundfile
+
+<!-- USAGE EXAMPLES -->
+## Usage
+Its rearly simple to use this script 
+```
+from utils import slowedreverb
+slowedreverb('input.wav', 'output.wav')
+```
+
+
