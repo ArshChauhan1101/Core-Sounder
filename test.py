@@ -3,7 +3,7 @@ from spotipy.oauth2 import SpotifyClientCredentials
 import json
 
 # Authentication without users
-ClientCredentialsManager = SpotifyClientCredentials(client_id='0180d12f7cca46a1986bc27625f1e559', client_secret='0cb8440aa43749b0b728831aa95ec5dc')
+ClientCredentialsManager = SpotifyClientCredentials(client_id='', client_secret='')
 sp = spotipy.Spotify(client_credentials_manager=ClientCredentialsManager)
 
 # Ask user for playlist link
