@@ -2,54 +2,60 @@ import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 import json
 
-# Authentication without user
-client_credentials_manager = SpotifyClientCredentials(client_id='0180d12f7cca46a1986bc27625f1e559', client_secret='0cb8440aa43749b0b728831aa95ec5dc')
-sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
+# Authentication without users
+ClientCredentialsManager = SpotifyClientCredentials(client_id='', client_secret='')
+sp = spotipy.Spotify(client_credentials_manager=ClientCredentialsManager)
 
-# Corrected playlist link
-playlistLink = 'https://open.spotify.com/playlist/59d84JzstZV0OsfZF8Itiq?si=33cdc73b080448b3'
-playlistURL = playlistLink.split("/")[-1].split("?")[0]
+# Ask user for playlist link
+playlist_link = input("Enter the Spotify playlist link: ")
 
-# Extract track URIs from the playlist
-track_uris = [x["track"]["uri"] for x in sp.playlist_tracks(playlistURL)["items"]]
+# Extract playlist URI
+playlist_URI = playlist_link.split("/")[-1].split("?")[0]
 
-# Initialize a dictionary to store the data
-playlist_data = {"tracks": []}
+# Get track URIs from the playlist
+track_uris = [x["track"]["uri"] for x in sp.playlist_tracks(playlist_URI)["items"]]
 
-# Iterate through each track in the playlist
-for track in sp.playlist(playlistURL)["tracks"]["items"]:
+# List to store track information
+playlist_data = []
+
+# Iterate over tracks and extract information
+for track in sp.playlist_tracks(playlist_URI)["items"]:
     # URI
     track_uri = track["track"]["uri"]
 
-    # Track Name
+    # Track name
     track_name = track["track"]["name"]
 
-    # Main artist
-    artist_uri = track["track"]["artists"][0]["uri"]  # Use "artists" instead of "artist"
+    # Main Artist
+    artist_uri = track["track"]["artists"][0]["uri"]
     artist_info = sp.artist(artist_uri)
 
-    # Name, popularity, and genre
-    artist_name = artist_info["name"]
+    # Name, popularity, genre
+    artist_name = track["track"]["artists"][0]["name"]
     artist_pop = artist_info["popularity"]
     artist_genres = artist_info["genres"]
 
     # Album
     album = track["track"]["album"]["name"]
 
-    # Popularity of the Track
+    # Popularity of the track
     track_pop = track["track"]["popularity"]
 
-    # Add track information to the dictionary
-    playlist_data["tracks"].append({
-        "track_uri": track_uri,
-        "track_name": track_name,
-        "artist_name": artist_name,
-        "artist_popularity": artist_pop,
-        "artist_genres": artist_genres,
-        "album": album,
-        "track_popularity": track_pop
-    })
+    # Get audio features for the track
+    audio_features = sp.audio_features(track_uri)[0]
 
-# Save the data to a JSON file
-with open('playlist_data.json', 'w') as json_file:
+    # Create a dictionary with track information
+    track_info = {
+        "Track": track_name,
+        "Artist": artist_name,
+        "Album": album,
+    }
+
+    # Append track information to the list
+    playlist_data.append(track_info)
+
+# Save the information to a JSON file
+with open("playlist_data.json", "w") as json_file:
     json.dump(playlist_data, json_file, indent=2)
+
+print("Playlist data saved to playlist_data.json")
